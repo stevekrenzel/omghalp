@@ -1,0 +1,67 @@
+<html>
+  <head>
+    <title>OMGHALP - Sometimes friends suck at Draw Something</title>
+    <link rel="icon" type="image/png" href="/static/favico.png">
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0;"/>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+  </head>
+  <body>
+    <center>
+      <div class="root">
+        <div class="header">
+          <img src="/static/logo.png"></img>
+          <br>
+          <div class="description">Sometimes friends suck at <a href="http://omgpop.com/drawsomething">Draw Something</a></div>
+        </div>
+        <div class="content">
+          <form action="." method="GET">
+            <br>
+            <label>1. How long is the word?</label>
+            {% if length == None and len(chars) > 0 %}
+              <div class='error'>You need to specify a length!</div>
+            {% end %}
+            <br>
+            <input class="num" name="length" type="number" value="{{ length or '' }}" placeholder="(3, 4, 5, 6, etc...)"></input>
+            <br>
+            <br>
+            <label>2. What letters were given?</label>
+            {% if length > 0 and len(chars) == 0 %}
+              <div class='error'>You need to specify some characters!</div>
+            {% end %}
+            <br>
+            <div class="char-list">
+              {% for i in range(12) %}
+                {% set value = '' %}
+                {% if len(chars) > i %}
+                  {% set value = chars[i] %}
+                {% end %}
+                <input class="char" name="char" id="c{{ i }}" value="{{ value }}" type="text" autocomplete="off"></input>
+              {% end %}
+            </div>
+            <br>
+            <input class="button search" type="submit" value="Search"></input>
+            <a class="button clear" href="/">Clear</a>
+          </form>
+          {% if (len(chars) > 0 and length > 0) or len(words) > 0 %}
+            <a class="results-header" name="results">Words:</a>
+            {% if len(words) == 0 %}
+              <div class="error">
+                 Dang! No words found.
+              </div>
+            {% else %}
+              <ol class="results">
+                {% for word in words %}
+                  <li>{{ word }}</li>
+                {% end %}
+              </ol>
+            {% end %}
+            </div>
+          {% end %}
+        <a class="about" href="http://stevekrenzel.com">By Steve Krenzel</a>
+      </div>
+    </center>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <script src="/static/omghalp.js" type="text/javascript"></script>
+  </body>
+</html>
